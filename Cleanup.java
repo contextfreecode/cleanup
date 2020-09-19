@@ -9,11 +9,11 @@ record Resource(String name) implements AutoCloseable {
 }
 
 class Cleanup {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         new Cleanup().run();
     }
 
-    void run() throws Exception {
+    void run() {
         var writer = prepOut("out", "a", "b");
         try {
             System.out.printf("use out%n");
@@ -22,12 +22,13 @@ class Cleanup {
         }
     }
 
-    Resource prepOut(String outName, String... preludeNames) {
+    Resource prepOut(String outName, String... prepNames) {
         var writer = new Resource(outName);
         try {
-            for (var name: preludeNames) {
+            for (var name: prepNames) {
                 var reader = new Resource(name);
                 try {
+                    // if (true) throw new Error("WELCOME TO YOUR DOOM!!");
                     System.out.printf("use %s%n", name);
                 } finally {
                     reader.close();
