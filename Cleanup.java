@@ -1,26 +1,36 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.Writer;
+record Resource(String name) implements AutoCloseable {
+    public Resource {
+        System.out.printf("open %s%n", name);
+    }
+
+    public void close() {
+        System.out.printf("close %s%n", name);
+    }
+}
 
 class Cleanup {
     public static void main(String[] args) throws Exception {
-        try (var writer = new Cleanup().prepOut("out.txt", "a.txt", "b.txt")) {
-            writer.write("done\n");
+        new Cleanup().run();
+    }
+
+    void run() throws Exception {
+        var writer = prepOut("out", "a", "b");
+        try {
+            System.out.printf("use out%n");
+        } finally {
+            writer.close();
         }
     }
 
-    Writer prepOut(String outName, String... preludeNames) throws Exception {
-        var writer = new BufferedWriter(new FileWriter(outName));
+    Resource prepOut(String outName, String... preludeNames) {
+        var writer = new Resource(outName);
         try {
-            var buffer = new char[8192];
             for (var name: preludeNames) {
-                try (var reader = new BufferedReader(new FileReader(name))) {
-                    int count;
-                    while ((count = reader.read(buffer)) != -1) {
-                        writer.write(buffer, 0, count);
-                    }
+                var reader = new Resource(name);
+                try {
+                    System.out.printf("use %s%n", name);
+                } finally {
+                    reader.close();
                 }
             }
         } catch (Exception e) {
