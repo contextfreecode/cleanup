@@ -2,13 +2,17 @@ class Resource
   def initialize(name, &block)
     puts "open #{name}"
     @name = name
+    @closed = false
     if block_given?
       handle(&block)
     end
   end
 
   def close
-    puts "close #{@name}"
+    if not @closed
+      puts "close #{@name}"
+      @closed = true
+    end
   end
 
   def handle
@@ -25,6 +29,7 @@ def main()
   # puts "use out"
   # writer.close
   prep_out("out", prep_names: ["a", "b"]) do |writer|
+    raise "No, I am!"
     puts "use out"
   end
 end
