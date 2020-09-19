@@ -8,6 +8,10 @@ class Resource(AbstractContextManager):
         self.closed = False
         self.name = name
 
+    # def __enter__(self):
+    #     print(f"enter {self.name}")
+    #     return self
+
     # def __del__(self):
     #     print(f"del {self.name}")
     #     self.close()
@@ -30,13 +34,15 @@ def prep_out(out_name: str, *, prep_names: Iterable[str]) -> Resource:
     writer = Resource(out_name)
     try:
         for name in prep_names:
-            with Resource(name):
+            with Resource(name) as reader:
                 # raise Exception("WELCOME TO YOUR DOOM!!")
                 print(f"use {name}")
         return writer
     except:
         writer.close()
         raise
+    # else:
+    #     return writer
 
 
 if __name__ == "__main__":
