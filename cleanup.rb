@@ -29,7 +29,7 @@ def main()
   # puts "use out"
   # writer.close
   prep_out("out", prep_names: ["a", "b"]) do |writer|
-    raise "No, I am!"
+    # raise "No way!"
     puts "use out"
   end
 end

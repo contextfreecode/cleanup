@@ -2,6 +2,7 @@ from contextlib import AbstractContextManager, closing
 from typing import Iterable
 
 
+# TODO Mention @contextmanager
 class Resource(AbstractContextManager):
     def __init__(self, name: str):
         print(f"open {name}")
