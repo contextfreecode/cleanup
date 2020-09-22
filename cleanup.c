@@ -4,7 +4,11 @@ typedef struct Resource {
   const char* name;
 } Resource;
 
-typedef enum {Error_None, Error_Bad, Error_Doom} Error;
+typedef enum {
+  Error_None,
+  Error_Bad,
+  Error_Doom,
+} Error;
 
 typedef struct ResourceResult {
   Error error;

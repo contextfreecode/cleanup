@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*;
 
 class CleanupFiles {
     public static void main(String[] args) throws Exception {
@@ -6,7 +7,7 @@ class CleanupFiles {
     }
 
     void run() throws Exception {
-        var writer = prepOut("out", "a", "b");
+        var writer = prepOut("out", Arrays.asList("a", "b"));
         try {
             writer.write("done\n");
         } finally {
@@ -14,7 +15,8 @@ class CleanupFiles {
         }
     }
 
-    Writer prepOut(String outName, String... prepNames) throws Exception {
+    Writer prepOut(String outName, Iterable<String> prepNames)
+            throws Exception {
         var writer = new BufferedWriter(new FileWriter(outName));
         try {
             var buffer = new char[8192];

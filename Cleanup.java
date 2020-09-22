@@ -1,3 +1,5 @@
+import java.util.*;
+
 record Resource(String name) implements AutoCloseable {
     public Resource {
         System.out.printf("open %s%n", name);
@@ -14,7 +16,7 @@ class Cleanup {
     }
 
     void run() {
-        var writer = prepOut("out", "a", "b");
+        var writer = prepOut("out", Arrays.asList("a", "b"));
         try {
             System.out.printf("use out%n");
         } finally {
@@ -22,7 +24,7 @@ class Cleanup {
         }
     }
 
-    Resource prepOut(String outName, String... prepNames) {
+    Resource prepOut(String outName, Iterable<String> prepNames) {
         var writer = new Resource(outName);
         try {
             for (var name: prepNames) {
