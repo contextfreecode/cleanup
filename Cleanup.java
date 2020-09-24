@@ -1,13 +1,16 @@
 import java.util.*;
 
-record Resource(String name) implements AutoCloseable {
-    public Resource {
+class Resource implements AutoCloseable {
+    public Resource(String name) {
         System.out.printf("open %s%n", name);
+        this.name = name;
     }
 
     public void close() {
         System.out.printf("close %s%n", name);
     }
+
+    String name;
 }
 
 class Cleanup {

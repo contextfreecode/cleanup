@@ -18,6 +18,7 @@ auto prep_out(
   const std::string& out_name,
   const std::vector<std::string>& prep_names
 ) -> Resource {
+  // See https://en.cppreference.com/w/cpp/language/copy_elision
   auto writer = Resource{out_name};
   for (auto& name: prep_names) {
     auto reader = Resource{name};

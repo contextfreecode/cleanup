@@ -7,7 +7,7 @@ typedef struct Resource {
 typedef enum {
   Error_None,
   Error_Bad,
-  Error_Doom,
+  Error_WelcomeToYourDoom,
 } Error;
 
 typedef struct ResourceResult {
@@ -45,7 +45,7 @@ ResourceResult prep_out(const char* out_name, StringSpan prep_names) {
       error = reader_result.error;
       goto close_writer_result;
     }
-    // error = Error_Doom;
+    // error = Error_WelcomeToYourDoom;
     // goto close_reader_result;
     printf("use %s\n", prep_names.items[index]);
 close_reader_result:
