@@ -15,7 +15,6 @@ class Resource: IDisposable {
 }
 
 class Cleanup {
-
     static void Main(string[] args) {
         new Cleanup().Run();
     }
@@ -41,5 +40,4 @@ class Cleanup {
         }
         return writer;
     }
-
 }
