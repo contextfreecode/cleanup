@@ -3,3 +3,8 @@ obj/
 zig-cache/
 *.class
 cleanup
+
+
+#Added by cargo
+
+/target
