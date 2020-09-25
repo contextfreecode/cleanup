@@ -7,24 +7,24 @@ fn make_error<E: Into<Box<dyn Error + Send + Sync>>>(error: E) -> Box<dyn Error>
     std::io::Error::new(std::io::ErrorKind::Other, error).into()
 }
 
-struct Resource<'a> {
-    name: &'a str,
+struct Resource {
+    name: String,
 }
 
-impl<'a> Resource<'a> {
-    fn new(name: &'a str) -> Try<Resource> {
+impl Resource {
+    fn new(name: &str) -> Try<Resource> {
         println!("open {}", name);
-        Ok(Resource { name })
+        Ok(Resource { name: name.into() })
     }
 }
 
-impl<'a> Drop for Resource<'a> {
+impl Drop for Resource {
     fn drop(&mut self) {
         println!("close {}", self.name);
     }
 }
 
-fn prep_out<'a>(out_name: &'a str, prep_names: &[&str]) -> Try<Resource<'a>> {
+fn prep_out(out_name: &str, prep_names: &[&str]) -> Try<Resource> {
     let writer = Resource::new(out_name)?;
     for name in prep_names {
         let _reader = Resource::new(name)?;
