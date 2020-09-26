@@ -24,16 +24,6 @@ class Resource
   end
 end
 
-def main()
-  # writer = prep_out("out", prep_names: ["a", "b"])
-  # puts "use out"
-  # writer.close
-  prep_out("out", prep_names: ["a", "b"]) do |writer|
-    # raise "No way!"
-    puts "use out"
-  end
-end
-
 def prep_out(out_name, prep_names:, &block)
   writer = Resource.new(out_name)
   begin
@@ -55,6 +45,16 @@ rescue
   raise
 # else
 #   puts "Hi!"
+end
+
+def main()
+  # writer = prep_out("out", prep_names: ["a", "b"])
+  # puts "use out"
+  # writer.close
+  prep_out("out", prep_names: ["a", "b"]) do |writer|
+    # raise "No way!"
+    puts "use out"
+  end
 end
 
 main()

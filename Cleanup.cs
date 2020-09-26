@@ -15,16 +15,6 @@ class Resource: IDisposable {
 }
 
 class Cleanup {
-    static void Main(string[] args) {
-        new Cleanup().Run();
-    }
-
-    void Run() {
-        using (var writer = PrepOut("out", new List<string>{"a", "b"})) {
-            Console.WriteLine("use out");
-        }
-    }
-
     Resource PrepOut(string outName, IEnumerable<string> prepNames) {
         var writer = new Resource(outName);
         try {
@@ -39,5 +29,15 @@ class Cleanup {
             throw;
         }
         return writer;
+    }
+
+    void Run() {
+        using (var writer = PrepOut("out", new List<string>{"a", "b"})) {
+            Console.WriteLine("use out");
+        }
+    }
+
+    static void Main(string[] args) {
+        new Cleanup().Run();
     }
 }

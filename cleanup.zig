@@ -1,8 +1,6 @@
 const print = @import("std").debug.print;
 
 const Resource = struct {
-    name: []const u8,
-
     pub fn init(name: []const u8) !Resource {
         print("open {}\n", .{name});
         return Resource{ .name = name };
@@ -11,6 +9,8 @@ const Resource = struct {
     pub fn deinit(self: Resource) void {
         print("close {}\n", .{self.name});
     }
+
+    name: []const u8,
 };
 
 const Error = error{WelcomeToYourDoom};

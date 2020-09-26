@@ -26,11 +26,6 @@ class Resource(AbstractContextManager):
             self.closed = True
 
 
-def main():
-    with prep_out("out", prep_names=["a", "b"]) as writer:
-        print("use out")
-
-
 def prep_out(out_name: str, *, prep_names: Iterable[str]) -> Resource:
     writer = Resource(out_name)
     try:
@@ -46,6 +41,11 @@ def prep_out(out_name: str, *, prep_names: Iterable[str]) -> Resource:
         raise
     # else:
     #     return writer
+
+
+def main():
+    with prep_out("out", prep_names=["a", "b"]) as writer:
+        print("use out")
 
 
 if __name__ == "__main__":

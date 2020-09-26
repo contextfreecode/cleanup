@@ -2,19 +2,6 @@ import java.io.*;
 import java.util.*;
 
 class CleanupFiles {
-    public static void main(String[] args) throws Exception {
-        new CleanupFiles().run();
-    }
-
-    void run() throws Exception {
-        var writer = prepOut("out", Arrays.asList("a", "b"));
-        try {
-            writer.write("done\n");
-        } finally {
-            writer.close();
-        }
-    }
-
     Writer prepOut(String outName, Iterable<String> prepNames)
             throws Exception {
         var writer = new BufferedWriter(new FileWriter(outName));
@@ -36,5 +23,18 @@ class CleanupFiles {
             throw e;
         }
         return writer;
+    }
+
+    void run() throws Exception {
+        var writer = prepOut("out", Arrays.asList("a", "b"));
+        try {
+            writer.write("done\n");
+        } finally {
+            writer.close();
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        new CleanupFiles().run();
     }
 }

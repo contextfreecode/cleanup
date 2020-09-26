@@ -14,19 +14,6 @@ class Resource implements AutoCloseable {
 }
 
 class Cleanup {
-    public static void main(String[] args) {
-        new Cleanup().run();
-    }
-
-    void run() {
-        var writer = prepOut("out", Arrays.asList("a", "b"));
-        try {
-            System.out.printf("use out%n");
-        } finally {
-            writer.close();
-        }
-    }
-
     Resource prepOut(String outName, Iterable<String> prepNames) {
         var writer = new Resource(outName);
         try {
@@ -44,5 +31,18 @@ class Cleanup {
             throw e;
         }
         return writer;
+    }
+
+    void run() {
+        var writer = prepOut("out", Arrays.asList("a", "b"));
+        try {
+            System.out.printf("use out%n");
+        } finally {
+            writer.close();
+        }
+    }
+
+    public static void main(String[] args) {
+        new Cleanup().run();
     }
 }
