@@ -40,7 +40,8 @@ ResourceResult prep_out(const char* out_name, StringSpan prep_names) {
     goto fail;
   }
   for (size_t index = 0; index < prep_names.length; index += 1) {
-    ResourceResult reader_result = Resource_open(prep_names.items[index]);
+    ResourceResult reader_result =
+      Resource_open(prep_names.items[index]);
     if (reader_result.error) {
       error = reader_result.error;
       goto close_writer_result;
@@ -50,9 +51,7 @@ ResourceResult prep_out(const char* out_name, StringSpan prep_names) {
     printf("use %s\n", prep_names.items[index]);
 close_reader_result:
     Resource_close(&reader_result.value);
-    if (error) {
-      goto close_writer_result;
-    }
+    if (error) goto close_writer_result;
   }
   return writer_result;
   // Only happens on fail.
@@ -65,14 +64,17 @@ fail:
 int main() {
   Error error = Error_None;
   ResourceResult writer_result = prep_out(
-    "out", (StringSpan){.items = (const char*[]){"a", "b"}, .length = 2}
+    "out",
+    (StringSpan){.items = (const char*[]){"a", "b"}, .length = 2}
   );
   if (writer_result.error) {
     error = writer_result.error;
     goto fail;
   }
   printf("use out\n");
+close_writer_result:
   Resource_close(&writer_result.value);
+  if (error) goto fail;
   return 0;
 fail:
   printf("error %d\n", error);

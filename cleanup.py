@@ -30,17 +30,16 @@ def prep_out(out_name: str, *, prep_names: Iterable[str]) -> Resource:
     writer = Resource(out_name)
     try:
         for name in prep_names:
-            # TODO resource = Resource(name) then multiple with blocks.
             # with closing(Resource(name)) as reader:
             with Resource(name) as reader:
                 # raise Exception("WELCOME TO YOUR DOOM!!")
                 print(f"use {name}")
-        return writer
     except:
         writer.close()
         raise
     # else:
-    #     return writer
+    #     print("Hi!")
+    return writer
 
 
 def main():

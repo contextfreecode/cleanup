@@ -1,8 +1,8 @@
 class Resource
   def initialize(name, &block)
     puts "open #{name}"
-    @name = name
     @closed = false
+    @name = name
     if block_given?
       handle(&block)
     end
@@ -39,7 +39,6 @@ def prep_out(out_name, prep_names:, &block)
       return writer
     end
   end
-  # puts "Hi!"
 rescue
   writer.close
   raise

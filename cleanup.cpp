@@ -7,18 +7,28 @@ struct Resource {
     std::cout << "open " << name << std::endl;
   }
 
+  Resource(Resource&& other):
+    name{std::move(other.name)},
+    closed{other.closed}
+  {
+    other.closed = true;
+  }
+
   ~Resource() {
-    std::cout << "close " << name << std::endl;
+    if (!closed) {
+      std::cout << "close " << name << std::endl;
+      closed = true;
+    }
   }
 
   std::string name;
+  bool closed = false;
 };
 
 auto prep_out(
   const std::string& out_name,
   const std::vector<std::string>& prep_names
 ) -> Resource {
-  // See https://en.cppreference.com/w/cpp/language/copy_elision
   auto writer = Resource{out_name};
   for (auto& name: prep_names) {
     auto reader = Resource{name};

@@ -3,8 +3,9 @@ use std::error::Error;
 type Try<Value> = Result<Value, Box<dyn Error>>;
 
 #[allow(dead_code)]
-fn make_error<E: Into<Box<dyn Error + Send + Sync>>>(error: E) -> Box<dyn Error> {
-    std::io::Error::new(std::io::ErrorKind::Other, error).into()
+fn make_error<Value>(error: &str) -> Try<Value> {
+    use std::io::{Error as IoError, ErrorKind};
+    Err(IoError::new(ErrorKind::Other, error).into())
 }
 
 struct Resource {
@@ -29,7 +30,7 @@ fn prep_out(out_name: &str, prep_names: &[&str]) -> Try<Resource> {
     for name in prep_names {
         let _reader = Resource::new(name)?;
         // if true {
-        //     return Err(make_error("WELCOME TO YOUR DOOM!!"));
+        //     return make_error("WELCOME TO YOUR DOOM!!");
         // }
         println!("use {}", name);
     }

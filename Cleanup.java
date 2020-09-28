@@ -26,7 +26,7 @@ class Cleanup {
                     reader.close();
                 }
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             writer.close();
             throw e;
         }
