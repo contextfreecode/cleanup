@@ -19,10 +19,9 @@ class Cleanup {
         var writer = new Resource(outName);
         try {
             foreach (var name in prepNames) {
-                using (var reader = new Resource(name)) {
-                    // throw new Exception("WELCOME TO YOUR DOOM!!");
-                    Console.WriteLine($"use {name}");
-                }
+                using var reader = new Resource(name);
+                // throw new Exception("WELCOME TO YOUR DOOM!!");
+                Console.WriteLine($"use {name}");
             }
         } catch {
             writer.Dispose();
@@ -32,9 +31,8 @@ class Cleanup {
     }
 
     void Run() {
-        using (var writer = PrepOut("out", new List<string>{"a", "b"})) {
-            Console.WriteLine("use out");
-        }
+        using var writer = PrepOut("out", new List<string>{"a", "b"});
+        Console.WriteLine("use out");
     }
 
     static void Main(string[] args) {

@@ -18,12 +18,9 @@ class Cleanup {
         var writer = new Resource(outName);
         try {
             for (var name: prepNames) {
-                var reader = new Resource(name);
-                try {
+                try (var reader = new Resource(name)) {
                     // if (true) throw new Error("WELCOME TO YOUR DOOM!!");
                     System.out.printf("use %s%n", name);
-                } finally {
-                    reader.close();
                 }
             }
         } catch (Throwable e) {
@@ -34,11 +31,8 @@ class Cleanup {
     }
 
     void run() {
-        var writer = prepOut("out", Arrays.asList("a", "b"));
-        try {
+        try (var writer = prepOut("out", Arrays.asList("a", "b"))) {
             System.out.printf("use out%n");
-        } finally {
-            writer.close();
         }
     }
 
